@@ -11,7 +11,6 @@ $(document).ready(function(){
         $(this).css('background-color', color);
         $(this).css('border-left-color', color);
         $(this).css('border-top-color', color);
-        console.log('this in ready = ' + $(this));
     });
     $('input[type=radio][name=color]').change(function(){
         colorScheme = this.value;
@@ -91,7 +90,6 @@ function getColor(colorScheme, id){
         case 'shadesOfBlack':
         {
             var savedRgb = parseInt($(id).data('rgb'));
-            console.log('data rgb = ' + savedRgb);
             savedRgb -= 25;
             if (savedRgb < 0)
             {

@@ -1,0 +1,21 @@
+body {
+    background-color: #f2f2f2;
+}
+#pad {
+    margin: 30px auto 0 auto;
+    background-color: white;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.squares{
+    display: inline-block;
+    float: left;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+}
+
+.row{
+    clear: both;
+    margin: 0 auto;
+}

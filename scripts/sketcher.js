@@ -1,4 +1,5 @@
 var dimPad = 600;
+var colorScheme = 1;
 
 var $pad = $('#pad');
 
@@ -6,6 +7,10 @@ $(document).ready(function(){
     createSquares(16);
     $(document).on('mouseenter', '.squares', function(){
         $(this).addClass('painted');
+    });
+    $('input[type=radio][name=color]').change(function(){
+        colorScheme = this.value;
+        console.log('colorScheme = ' + colorScheme);
     });
 });
 
@@ -15,6 +20,7 @@ function createSquares(num){
     var newDimPad = (dimSquare * num) + num;
     $pad.width(newDimPad + 'px');
     $pad.height(newDimPad + 'px');
+    $(inputs).width(newDimPad + 'px');
     console.log("newDimPad = " + newDimPad);
     for (var row = 0; row < num; row++)
     {
@@ -50,3 +56,4 @@ function promptUser(){
         }
     }
 }
+

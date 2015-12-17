@@ -6,7 +6,15 @@
     <link rel="stylesheet" type="text/css" href="style/myStyle.css">
 </head>
 <body>
-    <div id="button"><button type="button" onClick="promptUser()">Reset</button></div>
+    <div id="inputs">
+        <button type="button" onClick="promptUser()">Reset</button>
+        <form id="colorScheme">
+            <input type="radio" name="color" value="1" checked="checked"/>Default
+            <input type="radio" name="color" value="2"/>Random
+            <input type="radio" name="color" value="3"/>Shades of Black
+        </form>
+        <div class="dummy"></div>
+    </div>
     <div id="pad"></div>
     <div class="dummy"></div>
     <script src="scripts/jquery-1.11.3.min.js"></script>

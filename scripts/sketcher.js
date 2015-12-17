@@ -4,6 +4,9 @@ var $pad = $('#pad');
 
 $(document).ready(function(){
     createSquares(16);
+    $(document).on('mouseenter', '.squares', function(){
+        $(this).addClass('painted');
+    });
 });
 
 function createSquares(num){

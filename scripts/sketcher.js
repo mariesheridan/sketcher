@@ -1,12 +1,16 @@
 var dimPad = 600;
-var colorScheme = 1;
 
 var $pad = $('#pad');
 
 $(document).ready(function(){
+    var colorScheme = 1;
+    var color = "rgb(255,128,179)";
     createSquares(16);
     $(document).on('mouseenter', '.squares', function(){
-        $(this).addClass('painted');
+        color = getColor(colorScheme);
+        $(this).css('background-color', color);
+        $(this).css('border-left-color', color);
+        $(this).css('border-top-color', color);
     });
     $('input[type=radio][name=color]').change(function(){
         colorScheme = this.value;
@@ -57,3 +61,35 @@ function promptUser(){
     }
 }
 
+function getColor(colorScheme){
+    var rgb = "rgb(255,128,179)";
+    
+    switch (colorScheme)
+    {
+        case 'default':
+        {
+            rgb = "rgb(255,128,179)";
+            break;
+        }
+        case 'random':
+        {
+            rgb = "rgb(" + getRandom255() + "," + getRandom255() + "," + getRandom255() + ")";
+            break;
+        }
+        case 'shadesOfBlack':
+        {
+            break;
+        }
+        default:
+        {
+            rgb = "rgb(255,128,179)";
+            break;
+        }
+    }
+    console.log("rgb = " + rgb);
+    return rgb;
+}
+
+function getRandom255(){
+    return Math.floor(Math.random() * 255);
+}

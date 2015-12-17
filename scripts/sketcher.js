@@ -1,16 +1,17 @@
 var dimPad = 600;
-
+var idPrefix = 'sq';
 var $pad = $('#pad');
 
 $(document).ready(function(){
-    var colorScheme = 1;
+    var colorScheme = 'default';
     var color = "rgb(255,128,179)";
     createSquares(16);
     $(document).on('mouseenter', '.squares', function(){
-        color = getColor(colorScheme);
+        color = getColor(colorScheme, $(this).attr('id'));
         $(this).css('background-color', color);
         $(this).css('border-left-color', color);
         $(this).css('border-top-color', color);
+        console.log('this in ready = ' + $(this));
     });
     $('input[type=radio][name=color]').change(function(){
         colorScheme = this.value;
@@ -36,6 +37,14 @@ function createSquares(num){
     }
     $('.squares').width(dimSquare + 'px');
     $('.squares').height(dimSquare + 'px');
+    $('.squares').each(function(i){
+        $(this).attr('id', idPrefix + i);
+    });
+    for (var i = 0; i < (num * num); i++)
+    {
+        var id = '#' + idPrefix + i;
+        $(id).data('rgb', '255');
+    }
 }
 
 function promptUser(){
@@ -61,23 +70,35 @@ function promptUser(){
     }
 }
 
-function getColor(colorScheme){
+function getColor(colorScheme, id){
     var rgb = "rgb(255,128,179)";
+    id = '#' + id;
     
     switch (colorScheme)
     {
         case 'default':
         {
+            $(id).data('rgb', '255');
             rgb = "rgb(255,128,179)";
             break;
         }
         case 'random':
         {
+            $(id).data('rgb', '255');
             rgb = "rgb(" + getRandom255() + "," + getRandom255() + "," + getRandom255() + ")";
             break;
         }
         case 'shadesOfBlack':
         {
+            var savedRgb = parseInt($(id).data('rgb'));
+            console.log('data rgb = ' + savedRgb);
+            savedRgb -= 25;
+            if (savedRgb < 0)
+            {
+                savedRgb = 0;
+            }
+            $(id).data('rgb', savedRgb);
+            rgb = "rgb(" + savedRgb + "," + savedRgb + "," + savedRgb + ")";
             break;
         }
         default:

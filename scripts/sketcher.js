@@ -4,13 +4,21 @@ var $pad = $('#pad');
 
 $(document).ready(function(){
     var colorScheme = 'default';
-    var color = "rgb(255,128,179)";
     createSquares(16);
-    $(document).on('mouseenter', '.squares', function(){
-        color = getColor(colorScheme, $(this).attr('id'));
-        $(this).css('background-color', color);
-        $(this).css('border-left-color', color);
-        $(this).css('border-top-color', color);
+    var mouseDown = false;
+
+   $(document).on('mousedown', '.squares', function(){
+       mouseDown = true;
+       paint('#' + $(this).attr('id'), colorScheme);
+   });
+   $(document).on('mouseup', '.squares', function(){
+       mouseDown = false;
+   });
+    $(document).on('mouseover', '.squares', function(){
+        if (mouseDown)
+        {
+            paint('#' + $(this).attr('id'), colorScheme);
+        }
     });
     $('input[type=radio][name=color]').change(function(){
         colorScheme = this.value;
@@ -46,6 +54,13 @@ function createSquares(num){
     }
 }
 
+function paint(id, colorScheme) {
+        var color = getColorForId(colorScheme, id);
+        $(id).css('background-color', color);
+        $(id).css('border-left-color', color);
+        $(id).css('border-top-color', color);
+}
+
 function promptUser(){
     var input = prompt('How many rows should your sketch pad have? There should be at least 1 row.', '16');
     if (input != null)
@@ -69,9 +84,8 @@ function promptUser(){
     }
 }
 
-function getColor(colorScheme, id){
+function getColorForId(colorScheme, id){
     var rgb = "rgb(255,128,179)";
-    id = '#' + id;
     
     switch (colorScheme)
     {

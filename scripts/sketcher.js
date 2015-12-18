@@ -1,17 +1,24 @@
 var dimPad = 600;
 var idPrefix = 'sq';
 var $pad = $('#pad');
+var baseColor = 'rgb(255,255,255)';
+var baseBorder = 'rgb(229, 229, 255)';
 
 $(document).ready(function(){
     var colorScheme = 'default';
     createSquares(16);
     var mouseDown = false;
-
+   $pad.css('background-color', baseColor);
+   $('body').css('background-color', baseBorder);
+   $('#inputs').css('background-color', baseBorder);
    $(document).on('mousedown', '.squares', function(){
        mouseDown = true;
        paint('#' + $(this).attr('id'), colorScheme);
    });
-   $(document).on('mouseup', '.squares', function(){
+   $(document).mousedown(function(){
+       mouseDown = true;
+   });
+   $(document).mouseup(function(){
        mouseDown = false;
    });
     $(document).on('mouseover', '.squares', function(){
@@ -44,6 +51,8 @@ function createSquares(num){
     }
     $('.squares').width(dimSquare + 'px');
     $('.squares').height(dimSquare + 'px');
+    $('.squares').css('border-left-color', baseBorder)
+                 .css('border-top-color', baseBorder);
     $('.squares').each(function(i){
         $(this).attr('id', idPrefix + i);
     });
@@ -56,9 +65,9 @@ function createSquares(num){
 
 function paint(id, colorScheme) {
         var color = getColorForId(colorScheme, id);
-        $(id).css('background-color', color);
-        $(id).css('border-left-color', color);
-        $(id).css('border-top-color', color);
+        $(id).css('background-color', color[0]);
+        $(id).css('border-left-color', color[1]);
+        $(id).css('border-top-color', color[1]);
 }
 
 function promptUser(){
@@ -85,20 +94,21 @@ function promptUser(){
 }
 
 function getColorForId(colorScheme, id){
-    var rgb = "rgb(255,128,179)";
+    var rgb = ["rgb(255,128,179)", "rgb(255,128,179)"];
     
     switch (colorScheme)
     {
         case 'default':
         {
             $(id).data('rgb', '255');
-            rgb = "rgb(255,128,179)";
+            rgb = ["rgb(255,128,179)", "rgb(255,128,179)"];
             break;
         }
         case 'random':
         {
             $(id).data('rgb', '255');
-            rgb = "rgb(" + getRandom255() + "," + getRandom255() + "," + getRandom255() + ")";
+            var rgbRandom = "rgb(" + getRandom255() + "," + getRandom255() + "," + getRandom255() + ")";
+            rgb = [rgbRandom, rgbRandom]
             break;
         }
         case 'shadesOfBlack':
@@ -110,16 +120,23 @@ function getColorForId(colorScheme, id){
                 savedRgb = 0;
             }
             $(id).data('rgb', savedRgb);
-            rgb = "rgb(" + savedRgb + "," + savedRgb + "," + savedRgb + ")";
+            var rgbShades = "rgb(" + savedRgb + "," + savedRgb + "," + savedRgb + ")";
+            rgb = [rgbShades, rgbShades]
+            break;
+        }
+        case 'eraser':
+        {
+            $(id).data('rgb', '255');
+            rgb = [baseColor, baseBorder];
             break;
         }
         default:
         {
-            rgb = "rgb(255,128,179)";
+            rgb = ["rgb(255,128,179)", "rgb(255,128,179)"];
             break;
         }
     }
-    console.log("rgb = " + rgb);
+    console.log("rgb = " + rgb[0]);
     return rgb;
 }
 
